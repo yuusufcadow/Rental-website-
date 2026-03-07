@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBed, FaBath, FaVectorSquare, FaMapMarkerAlt } from "react-icons/fa";
 
@@ -7,13 +7,18 @@ import villa from "../assets/villas.jpg";
 import penthouse from "../assets/penthouse.jpg";
 import townhouse from "../assets/townhouse.jpg";
 import home from "../assets/homestay.jpg";
-import land from "../assets/land.jpg";
 
 function Features() {
+  const primary = "#1447e6";
+  const [activeTab, setActiveTab] = useState("All");
+
+  const tabs = ["All", "Apartments", "Villas", "Penthouses"];
+
   const listings = [
     {
       id: 1,
       title: "Modern 3-Bedroom Apartment",
+      category: "Apartments",
       location: "Wadajir District, Mogadishu",
       price: "$1,200",
       beds: 3,
@@ -25,6 +30,7 @@ function Features() {
     {
       id: 2,
       title: "Oceanfront Luxury Villa",
+      category: "Villas",
       location: "Lido Beach Area, Mogadishu",
       price: "$3,500",
       beds: 5,
@@ -36,6 +42,7 @@ function Features() {
     {
       id: 3,
       title: "Elegant Family Townhouse",
+      category: "Apartments",
       location: "Hodan District, Mogadishu",
       price: "$950",
       beds: 4,
@@ -47,6 +54,7 @@ function Features() {
     {
       id: 4,
       title: "Comfortable Homestay",
+      category: "Apartments",
       location: "Karaan District, Mogadishu",
       price: "$650",
       beds: 2,
@@ -58,6 +66,7 @@ function Features() {
     {
       id: 5,
       title: "Luxury Penthouse Apartment",
+      category: "Penthouses",
       location: "Abdiaziz District, Mogadishu",
       price: "$2,400",
       beds: 4,
@@ -69,6 +78,7 @@ function Features() {
     {
       id: 6,
       title: "Private Villa With Garden",
+      category: "Villas",
       location: "Daynile District, Mogadishu",
       price: "$1,800",
       beds: 4,
@@ -79,84 +89,145 @@ function Features() {
     },
   ];
 
-  return (
-    <section className="bg-gray-100 py-20">
-      <div className="container mx-auto px-6 lg:px-10">
-        {/* Heading */}
-        <div className="text-center mb-14 animate-[fadeUp_0.8s_ease-out]">
-          <h2 className="text-3xl font-bold text-gray-800">
-            Featured Listings
-          </h2>
+  const filteredListings = useMemo(() => {
+    if (activeTab === "All") return listings;
+    return listings.filter((item) => item.category === activeTab);
+  }, [activeTab]);
 
-          <p className="text-gray-500 mt-2">
-            Handpicked properties that offer the best value and comfort in
-            Mogadishu.
-          </p>
+  return (
+    <section className="bg-gray-100 py-14 sm:py-16 lg:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Heading + Tabs */}
+        <div className="mb-12 animate-[fadeUp_0.8s_ease-out]">
+          <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+            <div className="text-center lg:text-left">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800">
+                Featured Listings
+              </h2>
+
+              <p className="text-gray-500 mt-3 max-w-2xl mx-auto lg:mx-0 text-sm sm:text-base">
+                Handpicked properties that offer the best value and comfort in
+                Mogadishu.
+              </p>
+            </div>
+
+            {/* Tabs Right Side */}
+            <div
+              className="flex flex-wrap items-center justify-center lg:justify-end gap-2 bg-white/75 border border-gray-100 p-1 "
+              style={{ borderRadius: 2 }}
+            >
+              {tabs.map((tab) => {
+                const isActive = activeTab === tab;
+
+                return (
+                  <button
+                    key={tab}
+                    type="button"
+                    onClick={() => setActiveTab(tab)}
+                    className="px-4 sm:px-5 py-2.5 text-sm font-semibold transition-all duration-300"
+                    style={{
+                      borderRadius: 2,
+                      backgroundColor: isActive ? primary : "transparent",
+                      color: isActive ? "#ffffff" : "#374151",
+                    }}
+                  >
+                    {tab}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {listings.map((house, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+          {filteredListings.map((house, index) => (
             <div
               key={house.id}
-              className="bg-white rounded overflow-hidden shadow-sm hover:shadow-xl transition duration-300 group animate-[fadeUp_0.8s_ease-out]"
-              style={{ animationDelay: `${index * 140}ms`, animationFillMode: "both" }}
+              className="bg-white overflow-hidden shadow-sm hover:shadow-xl transition duration-300 group animate-[fadeUp_0.8s_ease-out]"
+              style={{
+                borderRadius: 2,
+                animationDelay: `${index * 120}ms`,
+                animationFillMode: "both",
+              }}
             >
               {/* Image */}
-              <div className="relative">
+              <div className="relative overflow-hidden">
                 <img
                   src={house.image}
                   alt={house.title}
-                  className="w-full h-56 object-cover group-hover:scale-105 transition duration-300"
+                  className="w-full h-56 sm:h-60 object-cover group-hover:scale-105 transition duration-300"
                 />
 
                 {/* Label */}
-                <span className="absolute top-4 left-4 bg-blue-700 text-white text-xs px-3 py-1 rounded">
+                <span
+                  className="absolute top-4 left-4 text-white text-[11px] sm:text-xs px-3 py-1 font-semibold"
+                  style={{
+                    backgroundColor: primary,
+                    borderRadius: 2,
+                  }}
+                >
                   {house.label}
                 </span>
 
                 {/* Price */}
-                <div className="absolute bottom-4 left-4 bg-white px-3 py-1 rounded-md text-blue-700 font-semibold shadow">
+                <div
+                  className="absolute bottom-4 left-4 bg-white px-3 py-1.5 font-semibold shadow text-sm"
+                  style={{ borderRadius: 2, color: primary }}
+                >
                   {house.price}
                   <span className="text-gray-400 text-xs"> /month</span>
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-6">
-                <h3 className="font-semibold text-lg text-gray-800">
+              <div className="p-5 sm:p-6">
+                <h3 className="font-semibold text-lg text-gray-800 line-clamp-1">
                   {house.title}
                 </h3>
 
-                <p className="flex items-center text-gray-500 text-sm mt-1">
-                  <FaMapMarkerAlt className="mr-1 text-blue-600" />
-                  {house.location}
+                <p className="flex items-center text-gray-500 text-sm mt-2">
+                  <FaMapMarkerAlt className="mr-2 shrink-0" style={{ color: primary }} />
+                  <span className="line-clamp-1">{house.location}</span>
                 </p>
 
                 {/* Divider */}
                 <div className="border-t my-4"></div>
 
                 {/* Details */}
-                <div className="flex justify-between text-gray-600 text-sm">
-                  <span className="flex items-center gap-1">
-                    <FaBed /> {house.beds} Bed
+                <div className="grid grid-cols-3 gap-2 text-gray-600 text-xs sm:text-sm">
+                  <span className="flex items-center gap-1.5">
+                    <FaBed className="shrink-0" /> {house.beds} Bed
                   </span>
 
-                  <span className="flex items-center gap-1">
-                    <FaBath /> {house.baths} Bath
+                  <span className="flex items-center gap-1.5">
+                    <FaBath className="shrink-0" /> {house.baths} Bath
                   </span>
 
-                  <span className="flex items-center gap-1">
-                    <FaVectorSquare /> {house.size} sqft
+                  <span className="flex items-center gap-1.5">
+                    <FaVectorSquare className="shrink-0" /> {house.size}
                   </span>
                 </div>
 
                 {/* Button */}
                 <Link
                   to={`/rent/${house.id}`}
-                  className="block text-center mt-6 bg-gray-100 hover:bg-blue-700 hover:text-white text-gray-700 font-medium py-2 rounded-md transition"
+                  className="block text-center mt-6 font-medium py-3 transition"
+                  style={{
+                    borderRadius: 2,
+                    backgroundColor: "#f3f4f6",
+                    color: "#374151",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = primary;
+                    e.currentTarget.style.color = "#ffffff";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = "#f3f4f6";
+                    e.currentTarget.style.color = "#374151";
+                  }}
                 >
-                  Rent Now
+                  View Details
                 </Link>
               </div>
             </div>
@@ -164,10 +235,14 @@ function Features() {
         </div>
 
         {/* See More */}
-        <div className="flex justify-end text-center mt-10 animate-[fadeUp_0.8s_ease-out]">
+        <div className="flex justify-center sm:justify-end text-center mt-10 animate-[fadeUp_0.8s_ease-out]">
           <Link
             to="/properties"
-            className="bg-blue-700 hover:bg-blue-800 text-white px-8 py-3 rounded font-semibold transition"
+            className="px-6 sm:px-8 py-3 font-semibold text-white transition"
+            style={{
+              backgroundColor: primary,
+              borderRadius: 2,
+            }}
           >
             See More Properties
           </Link>

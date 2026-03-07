@@ -36,7 +36,7 @@ function Services() {
   ];
 
   return (
-    <section className="bg-gray-100 py-20">
+    <section className="bg-gray-100 pb-20">
       <div className="container mx-auto p-4">
         {/* Header */}
         <div className="mb-12 animate-[fadeUp_0.8s_ease-out]">

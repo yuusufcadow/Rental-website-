@@ -77,7 +77,7 @@ function Hero() {
   ];
 
   return (
-    <section className="w-full pt-20">
+    <section className="w-full ">
 
       {/* SWIPER */}
       <Swiper
