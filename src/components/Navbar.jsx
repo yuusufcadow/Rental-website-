@@ -116,7 +116,7 @@ function Navbar() {
         <div className="h-16 flex items-center justify-between">
           {/* Brand */}
           <a href="#home" className="flex items-center gap-3">
-            <img src={logo} alt="Logo" className="h-8 w-auto" />
+            <img src={logo} alt="Logo" className="h-10 w-auto" />
             <div className="leading-tight">
               <div className="text-sm sm:text-base font-extrabold tracking-tight text-black/85">
                 Mogadishu{" "}
