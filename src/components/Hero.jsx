@@ -14,22 +14,22 @@ import "swiper/css/navigation";
 
 function PropertyCard({ price, title, address }) {
   return (
-    <div className="bg-white p-5 sm:p-6 w-[90%] sm:w-[320px] shadow-xl">
+    <div className="bg-white p-8 sm:p-10 w-[90%] sm:w-[420px] shadow-xl">
       <div className="flex items-center gap-3 mb-2">
-        <span className="bg-green-600 text-white text-xs px-2 py-1 font-semibold">
+        <span className="bg-green-600 text-white text-xs px-4 py-2 font-semibold">
           FOR RENT
         </span>
 
-        <span className="text-blue-600 font-semibold text-sm sm:text-base">
+        <span className="text-blue-600 font-semibold text-sm sm:text-xl">
           {price} /month
         </span>
       </div>
 
-      <h2 className="text-lg sm:text-xl font-bold mb-1">{title}</h2>
+      <h2 className="text-lg sm:text-2xl font-bold mb-1">{title}</h2>
 
-      <p className="text-gray-500 text-xs sm:text-sm mb-4">{address}</p>
+      <p className="text-gray-500 text-xs sm:text-lg mb-4">{address}</p>
 
-      <div className="grid grid-cols-2 gap-3 text-gray-600 text-xs sm:text-sm">
+      <div className="grid grid-cols-2 gap-3 text-gray-600 text-xs sm:text-lg">
         <div className="flex items-center gap-2">
           <MdSquareFoot />
           2,283 Sq Ft
@@ -85,7 +85,7 @@ function Hero() {
         navigation
         autoplay={{ delay: 4000 }}
         loop
-        className="w-full h-[500px] sm:h-[600px] lg:h-[650px]"
+        className="w-full h-[500px] sm:h-[600px] lg:h-[850px]"
       >
         {slides.map((slide, index) => (
           <SwiperSlide key={index}>
